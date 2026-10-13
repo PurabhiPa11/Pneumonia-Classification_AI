@@ -63,14 +63,15 @@ python predict.py --model runs/cnn_lr_0001/custom_cnn/best.keras --threshold 0.8
 
 The original final run selected **ResNet50 by validation ROC AUC**. Its 203.7 MiB checkpoint is not included. The MobileNetV2 demonstration selector is separate and does not change that original selection. Training from scratch regenerates `runs/final/best_model.json`.
 
-### Recorded final-run test results
+### Recorded final test results
 
 | Model | Accuracy | ROC AUC | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
-| Custom CNN | 68.45% | 0.9129 | 0.9528 | 0.5220 | 0.6745 |
+| Custom CNN (final, adjusted threshold) | 77.35% | 0.9251 | 0.7398 | 0.9845 | 0.8448 |
 | MobileNetV2 | 88.51% | 0.9725 | 0.8511 | 0.9897 | 0.9152 |
 | ResNet50 | 84.79% | 0.9654 | 0.8084 | 0.9922 | 0.8910 |
 
-These are saved project results from `runs/final/comparison.json`, not newly rerun measurements. The lower-learning-rate CNN threshold reports describe a separate experiment. Its validation-selected threshold achieved 77.35% test accuracy; the report notes that the test set had previously been inspected during project development.
+The final CNN row uses the lower-learning-rate checkpoint with threshold **0.8610543608665466**, selected on validation data before test evaluation. Its metrics come from `results/cnn_threshold_check/test_threshold_results.json`; F1 is calculated from the recorded confusion matrix (TP=381, FP=134, FN=6, TN=97). MobileNetV2 and ResNet50 metrics come from `runs/final/comparison.json` using threshold 0.5. ROC AUC is independent of the decision threshold. These are saved project measurements, not newly rerun results. The CNN report notes that the test set had previously been inspected during project development.
 
 The dataset preparation retained 5,808 images locally after filtering. Dataset images, the virtual environment, duplicate checkpoints, and individual image score records are not published here. The checkpoints were copied from the existing project; inference has not been rerun as part of this upload.
+
